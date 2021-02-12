@@ -1,0 +1,34 @@
+﻿@model ATKManager.Models.CourtScheduleItem
+
+@{
+    ViewData["Title"] = "Cort";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="recent">
+                <h3>Lütfen Kort Seçiminizi Yapınız.</h3>
+            </div>
+            <div id="sendmessage">Kort Tercihiniz Başarıyla Gerçekleşti.</div>
+            <div id="errormessage"></div>
+            <form action="" method="post" role="form" class="contactForm">
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" id="CortName" placeholder="Lütfen Kort Adını Giriniz" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                    <div class="validation"></div>
+                </div>
+
+                <div class="form-group">
+                    <input type="datetime-local" class="form-control" name="subject" id="CortDate" placeholder="Subject" data-rule="minlen:4" />
+                    <div class="validation"></div>
+                </div>
+
+                <div class="text-center"><button type="submit" class="btn btn-primary btn-lg" formmethod="post">Rezerve Ediniz</button></div>
+            </form>
+        </div>
+    </div>
+
+
+

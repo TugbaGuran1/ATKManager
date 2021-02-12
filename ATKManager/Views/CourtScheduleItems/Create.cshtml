@@ -1,0 +1,272 @@
+﻿@model ATKManager.Models.CourtScheduleItem
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+
+    main {
+        display: flex;
+    }
+
+        main > * {
+            border: 1px solid;
+        }
+
+    table {
+        border-collapse: collapse;
+        font-family: Verdana, Geneva, Tahoma, sans-serif
+    }
+
+    td, th {
+        border: 1px solid;
+        padding: 10px;
+        min-width: 100px;
+        background: white;
+        box-sizing: border-box;
+        text-align: left;
+    }
+
+    .table-container {
+        position: relative;
+        max-height: 1000px;
+        width: 1000px;
+        overflow: scroll;
+    }
+
+    thead th {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: hsl(20, 50%, 70%);
+    }
+
+        thead th:first-child {
+            left: 0;
+            z-index: 3;
+        }
+
+    tfoot {
+        position: -webkit-sticky;
+        bottom: 0;
+        z-index: 2;
+    }
+
+        tfoot td {
+            position: sticky;
+            bottom: 0;
+            z-index: 2;
+            background: hsl(20, 50%, 70%);
+        }
+
+            tfoot td:first-child {
+                z-index: 3;
+            }
+
+    tbody {
+        overflow: scroll;
+        height: 200px;
+    }
+
+    /* MAKE LEFT COLUMN FIXEZ */
+    tr > :first-child {
+        position: -webkit-sticky;
+        position: sticky;
+        background: hsl(180, 50%, 70%);
+        left: 0;
+    }
+    /* don't do this */
+    tr > :first-child {
+        box-shadow: inset 0px 1px black;
+    }
+</style>
+
+
+@*<h4>Kort Seçiniz</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group" style="display:none">
+
+                    <label asp-for="UserID" class="control-label"></label>
+                    <input asp-for="UserID" class="form-control" value="@ViewData["userID"]" />
+
+                    <span asp-validation-for="UserID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReservationDate" class="control-label" id="l1"></label>
+                    <input asp-for="ReservationDate" class="form-control" />
+                    <span asp-validation-for="ReservationDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CourtID" class="control-label" id="l1" onclick="press()"></label>
+                    <select asp-for="CourtID" class="form-control" asp-items="ViewBag.CourtID"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Rezervasyon Oluşturunuz" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
+
+    </div>*@
+
+
+
+<div>
+    <h1 style="text-align:center;color:#035252;font-weight:bold">LÜTFEN KORT SEÇİMİNİZİ YAPINIZ</h1>
+    <br /> <br />
+    <div class="table">
+
+
+        <div class="" style="text-align:center">
+            <button type="submit" class="btn btn-primary">Boş Kortlar</button>
+            <button type="submit" class="btn btn-danger">Dolu Kortlar</button>
+            <button type="submit" class="btn btn-success">A Kortu</button>
+            <button type="submit" class="btn btn-success">B Kortu</button>
+            <button type="submit" class="btn btn-success">C Kortu</button>
+            <button type="submit" class="btn btn-success">D Kortu</button>
+            <button type="submit" class="btn btn-success">E Kortu</button>
+            <button type="submit" class="btn btn-success">F Kortu</button>
+            <button type="submit" class="btn btn-success">G Kortu</button>
+            <button type="submit" class="btn btn-success">H Kortu</button>
+            <button type="submit" class="btn btn-success">I Kortu</button>
+        </div>
+
+        <br /><br />
+
+        <div class="portlet-title" style="min-height: 42px;color:#000;">
+            <div class="fullscreen" style="padding:0;float:left;font-size:21px;" id="">
+
+                12.02.2021 - Cuma
+            </div>
+
+            <ul class="pagination pagination-lg" style="margin:5px;padding:0">
+                <li>
+                    <span style="padding: 0;padding-bottom: 3px;" id="DijitalSaat"></span>
+                </li>
+                <li class="active" onclick="('12.02.2021'); return false;">
+                    <a href="javascript:;" style="cursor:pointer;background-color: #3fc9d5!important;border-color: #3fc9d5;padding-top: 11px;padding-bottom: 11px;padding-left: 5px;font-size: 14px;padding-right: 5px;">Bugün</a>
+                </li>
+                <li class="active" onclick="('12.02.2021'); return false;">
+                    <a href="javascript:;" style="padding: 5px;font-size: 12px;text-align: center;cursor:pointer;">
+                        12.02.2021<br />
+                        Cuma
+                    </a>
+                </li>
+                <li onclick="('13.02.2021'); return false;" class="bg-red-thunderbird bg-font-red-thunderbird">
+                    <a href="javascript:;" style="padding: 5px;font-size: 12px;text-align: center;">
+                        13.02.2021<br />
+                        Cumartesi
+                    </a>
+                </li>
+                <li onclick="('14.02.2021'); return false;">
+                    <a href="javascript:;" style="padding: 5px;font-size: 12px;text-align: center;">
+                        14.02.2021<br />
+                        Pazar
+                    </a>
+                </li>
+
+
+            </ul>
+        </div>
+
+
+
+
+
+
+        <div class="table">
+            <table id="">
+
+                @for (int j = 0; j < 14; j++)
+                {
+                    <tr></tr>
+                    <tr>
+
+                        <td> @(j+8) : 15</td>
+                        @for (int k = 1; k < 16; k++)
+                        {
+                            var saat = (j + 8) + ":15";
+
+                            <td><button id="btnCourt_@k" class="CourtClass" saat="@saat" kort="@k">Kort @k</button></td>
+                        }
+                    </tr>
+
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+@*<script>
+        $(document).ready(function () {
+
+            $(".CourtClass").click(function () {
+                var birisim = $(this).attr("saat")
+                alert(birisim);
+
+            })
+        })
+    </script>*@
+
+
+
+
+
+
+<script>
+
+
+    CourtAddData = {
+        id: null,
+        saat: null,
+        kort: null
+    }
+
+    $(document).ready(function () {
+
+        $(".CourtClass").click(function () {
+            $.ajax({
+                url: '@Url.Action("Create", "CourtScheduleItems")',
+                type: "GET",
+                data: CourtAddData,
+                dataType: "json",
+                async: true,
+                success: function (sonuc) {
+                    if (sonuc == "başarılı")
+                        alert("Kayıt işlemi başarıyla gerçekleştirildi");
+                    else
+                        alert("Kayıt işlemi başarısız.");
+                },
+                error: function () {
+                    alert('Bir sorun olustu. Yeniden deneyin');
+                }
+                //data: {
+                //    id:"id",
+                //    saat: "saat",
+                //    kort: "kort"
+                //        //var saat = $(this).attr("saat")
+                //        //var kort = $(this).attr("kort")
+                //},
+                //success: function (gelenvei) {
+
+                //},
+                //error: function (hata) {
+
+                //}
+
+            });
+
+        });
+    });
+</script>
+
+
+
