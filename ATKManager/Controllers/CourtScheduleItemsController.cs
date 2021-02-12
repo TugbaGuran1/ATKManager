@@ -26,105 +26,72 @@ namespace ATKManager.Controllers
      
         public ActionResult Index()
         {
+            var userID = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var typ = userID.GetType();
+
+            ViewBag.CourtID = new SelectList(db.Courts, "CourtID", "CourtName");
+            ViewData["userID"] = userID;
             //db.Configuration.LazyLoadingEnabled = false;
-            return View(db.CourtScheduleItem.Include("Court").ToList().OrderByDescending(x => x.TimeTableID));
+            return View(); //db.CourtScheduleItem.ToList()
         }
         public ActionResult Create()
         {
-            var userID = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var typ = userID.GetType();
-
-            ViewBag.CourtID = new SelectList(db.Courts, "CourtID", "CourtName");
-            ViewData["userID"] = userID;
+           
             return View();
         }
-        [HttpPost]
-        //[ValidateInput(false)]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(CourtScheduleItem crt)
+        [HttpPost]        
+        public bool Create(CourtScheduleItem crt)
         {
 
             db.CourtScheduleItem.Add(crt);
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return true;
         }
 
-        public ActionResult Calendar()
-        {
-            return View();
-        }
 
-        //public JsonResult GetEvents()
+        //[HttpPost()]
+        //public JsonResult Create(int id, string saat, string kort)
         //{
+        //    string json = ("Create/CourtClass?id=" + id + "&saat=" + saat + "&kort=" + kort);
 
-        //        var events = db.FullCalendars.ToList();
-        //        return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        //    var userID = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var typ = userID.GetType();
+        //    ViewBag.CourtID = new SelectList(db.Courts, "CourtID", "CourtName");
+        //    ViewData["userID"] = userID;
 
+        //        //CourtScheduleItem ts = new CourtScheduleItem();
+        //        //ts.UserID = ts.UserID;
+        //        //ts.CourtID = ts.CourtID;
+        //        //ts.ReservationDate = item.ReservationDate;
+        //        //db.CourtScheduleItem.Add(ts);
+        //        //db.SaveChanges();
+
+
+        //    return Json();
         //}
+        //var t = JsonConvert.DeserializeObject(json);
 
+        //db.CourtScheduleItem.Add();
+        //db.SaveChanges();
+        //return RedirectToAction("Create");
 
+        //return Json(t, System.Web.Mvc.JsonRequestBehavior.AllowGet);
 
+        //var t = JsonConvert.DeserializeObject<MessageResult>(json);
 
-
-
-
-        [HttpPost()]
-        public ActionResult Create(string saat, string kort)
-        {
-
-            string json =("Create/CourtClass?saat=" + saat + "&kort=" + kort);
-            var t = JsonConvert.DeserializeObject(json);
-            return Json(t, System.Web.Mvc.JsonRequestBehavior.AllowGet);
-
-            //var t = JsonConvert.DeserializeObject<MessageResult>(json);
-
-            //if (t != null)
-            //    return Json("başarılı");
-            //else
-            //    return Json("başarısız");
-
-        }
-
-
-
-
-
-
-
-
-
-        public ActionResult CalendarItem()
-        {
-            var userID = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var typ = userID.GetType();
-
-            ViewBag.CourtID = new SelectList(db.Courts, "CourtID", "CourtName");
-            ViewData["userID"] = userID;
-            return View();
-        }
-        [HttpPost]
-        //[ValidateInput(false)]
-        [ValidateAntiForgeryToken]
-        public ActionResult CalendarItem(CourtScheduleItem crt)
-        {
-
-            db.CourtScheduleItem.Add(crt);
-            db.SaveChanges();
-            return RedirectToAction("Create");
-        }
+        //if (t != null)
+        //    return Json("başarılı");
+        //else
+        //    return Json("başarısız");
 
         public ActionResult Edit(int id)
-        {
-           
+        {  
             var b = db.CourtScheduleItem.Where(x => x.TimeTableID == id).SingleOrDefault();
-         
             ViewBag.CourtID = new SelectList(db.Courts, "CourtID", "CourtName", b.CourtID);
             return View(b);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-
         public ActionResult Edit(int id, CourtScheduleItem crt)
         {
             if (ModelState.IsValid)
@@ -143,12 +110,6 @@ namespace ATKManager.Controllers
 
     }
 }
-
-
-
-
-
-
 
 //public ActionResult Create()
 //{

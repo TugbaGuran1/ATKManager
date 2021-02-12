@@ -85,7 +85,7 @@
 </style>
 
 
-@*<h4>Kort Seçiniz</h4>
+<h4>Kort Seçiniz</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">
@@ -113,17 +113,18 @@
             </form>
         </div>
 
-    </div>*@
+    </div>
 
 
 
 <div>
+
     <h1 style="text-align:center;color:#035252;font-weight:bold">LÜTFEN KORT SEÇİMİNİZİ YAPINIZ</h1>
     <br /> <br />
     <div class="table">
 
 
-        <div class="" style="text-align:center">
+        @*<div class="" style="text-align:center">
             <button type="submit" class="btn btn-primary">Boş Kortlar</button>
             <button type="submit" class="btn btn-danger">Dolu Kortlar</button>
             <button type="submit" class="btn btn-success">A Kortu</button>
@@ -135,11 +136,11 @@
             <button type="submit" class="btn btn-success">G Kortu</button>
             <button type="submit" class="btn btn-success">H Kortu</button>
             <button type="submit" class="btn btn-success">I Kortu</button>
-        </div>
+        </div>*@
 
         <br /><br />
 
-        <div class="portlet-title" style="min-height: 42px;color:#000;">
+        @*<div class="portlet-title" style="min-height: 42px;color:#000;">
             <div class="fullscreen" style="padding:0;float:left;font-size:21px;" id="">
 
                 12.02.2021 - Cuma
@@ -173,9 +174,7 @@
 
 
             </ul>
-        </div>
-
-
+        </div>*@
 
 
 
@@ -189,81 +188,72 @@
                     <tr>
 
                         <td> @(j+8) : 15</td>
+
+
                         @for (int k = 1; k < 16; k++)
                         {
+
                             var saat = (j + 8) + ":15";
+                            var kort = k;
 
-                            <td><button id="btnCourt_@k" class="CourtClass" saat="@saat" kort="@k">Kort @k</button></td>
+                            <td><button id="btnCourt_@kort" class="CourtClass" saat="@saat" kort="@kort">Kort @kort</button></td>
                         }
-                    </tr>
-
-                }
+                        </tr>
+      
+                    }
 
             </table>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 @*<script>
         $(document).ready(function () {
 
-            $(".CourtClass").click(function () {
-                var birisim = $(this).attr("saat")
-                alert(birisim);
-
-            })
+            
         })
     </script>*@
 
 
-
-
-
-
 <script>
-
-
-    CourtAddData = {
-        id: null,
-        saat: null,
-        kort: null
-    }
-
     $(document).ready(function () {
+        $(".CourtClass").click(function (e) {
+            e.preventDefault();
+            var Reservation = {
+                'UserID': '@ViewData["userID"]',
+                'ReservationDate': $(this).attr("saat"),
+                'CourtID': $(this).attr("kort")
+            }
 
-        $(".CourtClass").click(function () {
+            console.log('Reservation:::');
+            console.log(Reservation);
+
             $.ajax({
                 url: '@Url.Action("Create", "CourtScheduleItems")',
-                type: "GET",
-                data: CourtAddData,
-                dataType: "json",
-                async: true,
-                success: function (sonuc) {
-                    if (sonuc == "başarılı")
-                        alert("Kayıt işlemi başarıyla gerçekleştirildi");
-                    else
-                        alert("Kayıt işlemi başarısız.");
+                type: "POST",
+                data: Reservation,
+                async:false,
+                success: function (data) {
+
+                        alert("Kort kayıt işlemi başarıyla gerçekleştirildi");
+
                 },
-                error: function () {
+                error: function (res) {
+                    console.log("Err::::")
+                    console.log(res);
+
+
                     alert('Bir sorun olustu. Yeniden deneyin');
                 }
-                //data: {
-                //    id:"id",
-                //    saat: "saat",
-                //    kort: "kort"
-                //        //var saat = $(this).attr("saat")
-                //        //var kort = $(this).attr("kort")
-                //},
-                //success: function (gelenvei) {
-
-                //},
-                //error: function (hata) {
-
-                //}
-
             });
-
         });
     });
 </script>
